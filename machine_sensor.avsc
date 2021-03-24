@@ -1,0 +1,11 @@
+{
+    "namespace": "io.aiven.example",
+    "type": "record",
+    "name": "MachineSensor",
+    "fields": [
+        {"name": "machine", "type": "string", "doc": "The machine whose sensor this is"},
+        {"name": "sensor", "type": "string", "doc": "Which sensor was read"},
+        {"name": "value", "type": "float", "doc": "Sensor reading"},
+        {"name": "units", "type": "string", "doc": "Measurement units"}
+    ]
+}
