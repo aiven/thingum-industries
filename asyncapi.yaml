@@ -1,0 +1,53 @@
+asyncapi: '2.0.0'
+id: 'urn:com.github.lornajane.example1'
+info:
+  title: Thingum Industries Sensors
+  description: Keeping the factory and all the machines running nicely
+  version: 1.0.0
+  contact:
+    name: Lorna
+    email: lornajane@aiven.io
+    url: https://github.com/aiven/thingum-industries
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  aiven-kafka:
+    url: kafka-thingum-industries.aivencloud.com:13041
+    protocol: kakfa-secure
+    protocolVersion: '1.0.0'
+    security:
+      - creds: []
+
+channels:
+  factorysensor:
+    description: Factory sensor data
+    subscribe:
+      operationId: MachineSensor
+      summary: Data from the in-machine sensors
+      tags:
+        - name: sensor
+      bindings:
+        kafka:
+          clientId:
+            type: string
+      message:
+        name: sensor-reading
+        title: Sensor Reading
+        description: Some information from a sensor
+        schemaFormat: "application/vnd.apache.avro;version=1.9.0"
+        payload: 
+          $ref: machine_sensor.avsc
+
+
+components:
+  securitySchemes:
+    creds:
+      type: X509
+      description: Download the files from the service overview page on your Aiven console
+
+tags:
+  - name: sensor
+    description: Factory machine sensors
+
