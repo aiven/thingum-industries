@@ -22,6 +22,39 @@ In the `python` folder you will find `sensor.py` which read the schema file, con
 
 * If you're using Aiven, the console has the viewer to see the produced messages, decoding the Avro. KafDrop or other clients would work well too :)
 
+## Go Producer for Kafka+Avro Messages
+
+In the `golang/` folder you will find the files used to talk Avro to Kafka from Go.
+
+In order to support the correct data structure, the [gogen-avro](https://github.com/actgardner/gogen-avro
+) project was used to generate structs from the `machine_sensor.avsc` schema. These are stored in the `avro/` folder and were generated with a command like:
+
+```
+gogen-avro avro machine_sensor.avsc
+```
+
+Similar to the steps for the Python setup, create a kafka instance and obtain the certificates and connection details. For a lazy quickstart, here are my scripts to do this via the `avn` commandline (run at the top level of the project):
+
+```
+avn service create --project dev-advocates -t kafka \
+    -p business-4 kafka-demo \
+    -c kafka.auto_create_topics_enable=true \
+    -c schema_registry=true \
+    -c kafka_rest=true
+
+avn service wait kafka-demo
+
+avn service get --json kafka-demo | jq ".service_uri"
+
+avn service get --json kafka-demo | jq ".connection_info.schema_registry_uri"
+
+avn service user-creds-download --username avnadmin kafka-demo
+```
+
+* Copy `.env.example` to `.env` and add the service and broker URIs to the file.
+
+* Run with `go run main.go` to get some messages produced and sent to your Kafka topic.
+
 
 ## Describing Apache Kafka Payloads with AsyncAPI
 
