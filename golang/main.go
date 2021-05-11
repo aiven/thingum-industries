@@ -66,7 +66,6 @@ func main() {
 		schemaBytes, readErr := ioutil.ReadFile("../machine_sensor.avsc")
 		fmt.Printf("%#v\n", readErr)
 		fmt.Println(string(schemaBytes))
-		fmt.Printf("%#v\n", srclient.Avro)
 		schema, err = schemaRegistryClient.CreateSchema(topic, string(schemaBytes), srclient.Avro, false)
 		if err != nil {
 			panic(fmt.Sprintf("Error creating the schema %s", err))
