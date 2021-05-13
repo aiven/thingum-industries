@@ -8,9 +8,9 @@ You'll find an example Avro schema `machine_sensor.avsc` that is used in these e
 
 ## Python Producer for Kafka+Avro Messages
 
-In the `python` folder you will find `sensor.py` which read the schema file, connects to Kakfa, and produces some mssages in the correct data format. To use this example yourself:
+In the `python` folder you will find `sensor.py` which reads the schema file, connects to Kafka, and produces some messages in the correct data format. To use this example yourself:
 
-* Copy `.env/example` to `.env` and add the URLs for your Schema Registry and Apache Kafka broker. My example uses [Aiven](https://aiven.io) and therefore the schema registry is [Karapace](https://github.com/aiven/karapace).
+* Copy `.env.example` to `.env` and add the URLs for your Schema Registry and Apache Kafka broker. My example uses [Aiven](https://aiven.io) and therefore the schema registry is [Karapace](https://github.com/aiven/karapace).
 
 * Download the certificates and keys to the top-level directory of the project.
 
@@ -18,9 +18,9 @@ In the `python` folder you will find `sensor.py` which read the schema file, con
 
 * Install the dependencies: `pip install -r requirements.txt`
 
-* Run `python sensor.py` (requires Python3) to get some messages produced to your queue in Avro format.
+* Run `python sensor.py` (requires Python3) to get some messages produced to your topic in Avro format.
 
-* If you're using Aiven, the console has the viewer to see the produced messages, decoding the Avro. KafDrop or other clients would work well too :)
+* If you're using Aiven, the console has the viewer to see the produced messages, decoding the Avro. [KafDrop](https://github.com/HomeAdvisor/Kafdrop) or other clients would work well too :)
 
 ## Go Producer for Kafka+Avro Messages
 
@@ -33,7 +33,7 @@ In order to support the correct data structure, the [gogen-avro](https://github.
 gogen-avro avro machine_sensor.avsc
 ```
 
-Similar to the steps for the Python setup, create a kafka instance and obtain the certificates and connection details. For a lazy quickstart, here are my scripts to do this via the `avn` commandline (run at the top level of the project):
+Similar to the steps for the Python setup, create a Kafka instance and obtain the certificates and connection details. For a lazy quickstart, here are my scripts to do this via the `avn` commandline (run at the top level of the project):
 
 ```
 avn service create --project dev-advocates -t kafka \
@@ -61,6 +61,3 @@ avn service user-creds-download --username avnadmin kafka-demo
 The file `asyncapi.yaml` contains a description of what a consumer could expect from the produced messages. The AsyncAPI format can also read the Avro schema, so I didn't need to describe the fields twice to generate code or documentation from this file.
 
 ![screenshot of generated documentation](docs/screenshot.png)
-
-
-
