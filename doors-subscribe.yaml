@@ -1,8 +1,8 @@
 asyncapi: '2.0.0'
-id: 'urn:com.github.lornajane.example1'
+id: 'urn:com.github.aiven.thingum'
 info:
-  title: Thingum Industries Sensors
-  description: Keeping the factory and all the machines running nicely
+  title: Thingum Industries Sensors 2
+  description: Keeping the factory secure
   version: 1.0.0
   contact:
     name: Lorna
@@ -13,24 +13,24 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 
 servers:
-  aiven-kafka:
+  production:
     url: kafka-thingum-industries.aivencloud.com:13041
     protocol: kafka-secure
     protocolVersion: '1.0.0'
     security:
       - creds: []
 
-  local-kafka:
+  development:
     url: localhost:9092
     protocol: kafka
     protocolVersion: '1.0.0'
 
 channels:
-  factorysensor:
-    description: Factory sensor data
+  door-sensor:
+    description: Door sensors (external and internal)
     subscribe:
-      operationId: MachineSensor
-      description: Data from the in-machine sensors
+      operationId: DoorSensor
+      description: Open/closed state information from the doors.
       tags:
         - name: sensor
       bindings:
@@ -38,18 +38,7 @@ channels:
           clientId:
             type: string
       message:
-        name: sensor-reading
-        title: Sensor Reading
-        description: Some information from a sensor
-        schemaFormat: "application/vnd.apache.avro;version=1.9.0"
-        payload: 
-          $ref: machine_sensor.avsc
-        examples:
-          - payload:
-              machine: "SuperOven3000"
-              sensor: "OvenTemp"
-              value: 284
-              units: "C"
+        $ref: doors-publish.yaml#/components/messages/DoorData
 
 components:
   securitySchemes:
@@ -59,5 +48,5 @@ components:
 
 tags:
   - name: sensor
-    description: Factory machine sensors
+    description: Factory sensors
 
