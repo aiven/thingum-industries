@@ -30,7 +30,7 @@ channels:
     description: Door sensors (external and internal)
     publish:
       operationId: DoorSensor
-      summary: Open/closed state information from the doors.
+      description: Open/closed state information from the doors.
       tags:
         - name: sensor
       bindings:
@@ -38,19 +38,29 @@ channels:
           clientId:
             type: string
       message:
-        name: door-sensor-data
-        title: Door Sensor Reading
-        description: Door sensor data
-        payload: 
-          type: object
-          properties:
-            location:
-              type: string
-            state:
-              enum: ["open", "closed"]
-
+        $ref: '#/components/messages/DoorData'
 
 components:
+  messages:
+    DoorData:
+      name: door-sensor-data
+      title: Door Sensor Reading
+      description: Door sensor data
+      payload: 
+        type: object
+        properties:
+          location:
+            type: string
+          state:
+            enum: ["open", "closed"]
+      examples:
+        - payload:
+            location: "Car park"
+            state: "open"
+        - payload:
+            location: "Roof-level fire exit"
+            state: "closed"
+
   securitySchemes:
     creds:
       type: X509

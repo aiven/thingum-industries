@@ -15,17 +15,22 @@ info:
 servers:
   aiven-kafka:
     url: kafka-thingum-industries.aivencloud.com:13041
-    protocol: kakfa-secure
+    protocol: kafka-secure
     protocolVersion: '1.0.0'
     security:
       - creds: []
+
+  local-kafka:
+    url: localhost:9092
+    protocol: kafka
+    protocolVersion: '1.0.0'
 
 channels:
   factorysensor:
     description: Factory sensor data
     subscribe:
       operationId: MachineSensor
-      summary: Data from the in-machine sensors
+      description: Data from the in-machine sensors
       tags:
         - name: sensor
       bindings:
@@ -39,7 +44,12 @@ channels:
         schemaFormat: "application/vnd.apache.avro;version=1.9.0"
         payload: 
           $ref: machine_sensor.avsc
-
+        examples:
+          - payload:
+              machine: "SuperOven3000"
+              sensor: "OvenTemp"
+              value: 284
+              units: "C"
 
 components:
   securitySchemes:

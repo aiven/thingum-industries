@@ -11,7 +11,7 @@ import (
 
 type doorSense struct {
 	Location string `json:"location"`
-	State    string `json:state"`
+	State    string `json:"state"`
 }
 
 func main() {

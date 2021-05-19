@@ -30,7 +30,7 @@ channels:
     description: Door sensors (external and internal)
     subscribe:
       operationId: DoorSensor
-      summary: Open/closed state information from the doors.
+      description: Open/closed state information from the doors.
       tags:
         - name: sensor
       bindings:
@@ -38,17 +38,7 @@ channels:
           clientId:
             type: string
       message:
-        name: door-sensor-data
-        title: Door Sensor Reading
-        description: Door sensor data
-        payload: 
-          type: object
-          properties:
-            location:
-              type: string
-            state:
-              enum: ["open", "closed"]
-
+        $ref: doors-publish.yaml#/components/messages/DoorData
 
 components:
   securitySchemes:
