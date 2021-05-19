@@ -1,0 +1,32 @@
+default:
+  app:
+    name: Thingum Industries Sensors 2
+    version: 1.0.0
+
+  broker:
+    kafka:
+      clientId: thingumIndustriesSensors2
+      brokers:
+        - 
+      consumerOptions:
+        groupId: thingumIndustriesSensors2
+      topics:
+        - door-sensor
+      topicSeparator: '__'
+      topicPrefix:
+
+development:
+
+test:
+
+staging:
+
+production:
+  broker:
+    kafka:
+      ssl:
+        rejectUnauthorized: true
+      sasl:
+        mechanism: 'plain'
+        username:
+        password:

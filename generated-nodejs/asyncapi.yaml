@@ -1,0 +1,72 @@
+asyncapi: '2.0.0'
+id: 'urn:com.github.aiven.thingum'
+info:
+  title: Thingum Industries Sensors 2
+  description: Keeping the factory secure
+  version: 1.0.0
+  contact:
+    name: Lorna
+    email: lornajane@aiven.io
+    url: https://github.com/aiven/thingum-industries
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  production:
+    url: kafka-thingum-industries.aivencloud.com:13041
+    protocol: kafka-secure
+    protocolVersion: '1.0.0'
+    security:
+      - creds: []
+
+  development:
+    url: localhost:9092
+    protocol: kafka
+    protocolVersion: '1.0.0'
+
+channels:
+  door-sensor:
+    description: Door sensors (external and internal)
+    publish:
+      operationId: DoorSensor
+      description: Open/closed state information from the doors.
+      tags:
+        - name: sensor
+      bindings:
+        kafka:
+          clientId:
+            type: string
+      message:
+        $ref: '#/components/messages/DoorData'
+
+components:
+  messages:
+    DoorData:
+      name: door-sensor-data
+      title: Door Sensor Reading
+      description: Door sensor data
+      payload: 
+        type: object
+        properties:
+          location:
+            type: string
+          state:
+            enum: ["open", "closed"]
+      examples:
+        - payload:
+            location: "Car park"
+            state: "open"
+        - payload:
+            location: "Roof-level fire exit"
+            state: "closed"
+
+  securitySchemes:
+    creds:
+      type: X509
+      description: Download the files from the service overview page on your Aiven console
+
+tags:
+  - name: sensor
+    description: Factory sensors
+
