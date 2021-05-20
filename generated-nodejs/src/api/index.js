@@ -7,10 +7,16 @@ const json2string = require('./middlewares/json2string');
 const logger = require('./middlewares/logger');
 const errorLogger = require('./middlewares/error-logger');
 const config = require('../lib/config');
+const serverConfig = config.broker.kafka;
 const KafkaAdapter = require('hermesjs-kafka');
 const doorSensor = require('./routes/door-sensor.js');
+const fs = require('fs')
 
-app.addAdapter(KafkaAdapter, config.broker.kafka);
+serverConfig.ssl.ca = fs.readFileSync('ca.pem');
+serverConfig.ssl.key = fs.readFileSync('service.key');
+serverConfig.ssl.cert = fs.readFileSync('service.cert');
+
+app.addAdapter(KafkaAdapter, serverConfig);
 
 app.use(buffer2string);
 app.use(string2json);
