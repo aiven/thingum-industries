@@ -7,13 +7,15 @@ default:
     kafka:
       clientId: thingumIndustriesSensors2
       brokers:
-        - 
+        - example-kafka-project.aivencloud.com:13041
       consumerOptions:
         groupId: thingumIndustriesSensors2
       topics:
         - door-sensor
       topicSeparator: '__'
       topicPrefix:
+      ssl:
+        rejectUnauthorized: true
 
 development:
 

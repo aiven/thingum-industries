@@ -10,7 +10,14 @@ const config = require('../lib/config');
 const KafkaAdapter = require('hermesjs-kafka');
 const doorSensor = require('./routes/door-sensor.js');
 
-app.addAdapter(KafkaAdapter, config.broker.kafka);
+const fs = require('fs')
+
+mykafka = config.broker.kafka
+mykafka.ssl.ca = fs.readFileSync('ca.pem');
+mykafka.ssl.key = fs.readFileSync('service.key');
+mykafka.ssl.cert = fs.readFileSync('service.cert');
+console.log(mykafka)
+app.addAdapter(KafkaAdapter, mykafka);
 
 app.use(buffer2string);
 app.use(string2json);
