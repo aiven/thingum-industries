@@ -14,7 +14,7 @@ info:
 
 servers:
   production:
-    url: kafka-thingum-industries.aivencloud.com:13041
+    url: kafka-demo-dev-advocates.aivencloud.com:13041
     protocol: kafka-secure
     protocolVersion: '1.0.0'
     security:
